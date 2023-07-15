@@ -34,19 +34,19 @@ The function `minOperations` returns the fewest number of operations needed to r
 
 The function takes an integer called `n` as input.
 
-The function starts with a string called `s` that contains one `H` character.
+The function returns `0` if `n` is less than or equal to `1`.
 
-The function checks if `n` is equal to `0` or `1`.
-If `n` is equal to `0` or `1`, the function returns `0`.
+The function declares a variable called `min_operations` and sets it to `0`.
 
-If `n` is greater than `1`, the function checks if `n` is divisible by `2`.
-If `n` is divisible by `2`, the function divides `n` by `2` and adds `2` to the number of operations.
+The function declares a variable called `current_length` and sets it to `1` (the length of the string `H`).
 
-If `n` is not divisible by `2`, the function checks if `n` is divisible by `3`.
-If `n` is divisible by `3`, the function divides `n` by `3` and adds `3` to the number of operations.
+The function declares a variable called `clipboard` and sets it to `0` as the clipboard is initially empty.
 
-If `n` is not divisible by `2` or `3`, the function adds `1` to the number of operations and adds `1` `H` character to `s`.
+While `current_length` is less than the input `n`, the function checks if `n` is divisible by `current_length`.
+If `n` is divisible by `current_length`, the function sets `clipboard` to `current_length` and increments `min_operations` by `1` as this is a copy operation.
 
-The function continues to check if `n` is divisible by `2` or `3` until `n` is equal to `1`.
+The function then sets `current_length` to `current_length` plus `clipboard` as this is a paste operation and increments `min_operations` by `1` as this is a paste operation.
 
-The function returns the number of operations.
+If `n` is not divisible by `current_length`, the function increments `current_length` by `clipboard` as this is a paste operation and increments `min_operations` by `1` as a result.
+
+The function returns `min_operations` as the fewest number of operations needed to result in exactly `n` `H` characters in a file.
