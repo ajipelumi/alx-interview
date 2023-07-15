@@ -7,20 +7,26 @@ def minOperations(n):
     if n <= 1:
         return 0
 
-    # Set min_op to 0
-    min_op = 0
-    # Iterate from 2 to n
-    i = 2
-    # While n is less than or equal to n
-    while i <= n:
-        # If n is divisible by i
-        if n % i == 0:
-            # Add i to min_op
-            min_op += i
-            # Divide n by i
-            n = n / i
-        else:
-            # Increment i
-            i += 1
-    # Return min_op
-    return min_op
+    # Declare minimum operation as 0
+    min_operations = 0
+    # Declare current length as 1 as we start with 1 character 'H'
+    current_length = 1
+    # Declare clipboard as 0 as we are not copying anything yet
+    clipboard = 0
+
+    # Loop until current length is equal to n
+    while current_length < n:
+        # If n is divisible by current length, we can copy all and paste
+        if n % current_length == 0:
+            # This is the only time we can copy
+            clipboard = current_length
+            # Minimum operation is incremented by 1 because we copied
+            min_operations += 1
+
+        # Paste the clipboard
+        current_length += clipboard
+        # Minimum operation is incremented by 1 because we pasted
+        min_operations += 1
+
+    # Return minimum operation
+    return min_operations
