@@ -4,65 +4,50 @@
 
 def validUTF8(data):
     """ Determines if a given data set represents a valid UTF-8 encoding. """
+    # Check if data exists or is not empty
     if not data or len(data) == 0:
         return False
 
-    bin_list = []
-    # Iterate over data and convert to binary
-    for character in data:
-        bin_list.append(format(character, '#010b')[-8:])
+    # Define an index to iterate through the data
+    index = 0
+    # While the index is less than the length of the data
+    while index < len(data):
+        # Convert the current data element to binary
+        binary = format(data[index], '#010b')[-8:]
 
-    # Check if binary is valid
-    for binary in bin_list:
-        # Check if binary is 1 byte
+        # If the first bit is 0, move to the next element
         if binary[0] == '0':
-            # If it is, binary is valid and we can continue
-            # to the next element in the list so we pop it
-            bin_list.pop(0)
-            continue
-
-        # Check if binary is 2 bytes
+            index += 1
+        # If the first bit is 1, check the number of 1s
         elif binary[:3] == '110':
-            # If it is, check that binary list has at least 2 elements
-            if len(bin_list) < 2:
+            # If the next element does not start with 10, return False
+            if index + 1 >= len(data) or format(data[index + 1],
+                                                '#010b')[0:2] != '10':
                 return False
-            # Check that the next element in the list starts with 10
-            if bin_list[1][:2] != '10':
-                return False
-            # We pop the first 2 bytes of the binary
-            bin_list.pop(0)
-            bin_list.pop(0)
-
-        # Check if binary is 3 bytes
+            # Move to the next 2 elements
+            index += 2
+        # If the first 3 bits are 1, check the number of 1s
         elif binary[:4] == '1110':
-            # If it is, check that binary list has at least 3 elements
-            if len(bin_list) < 3:
+            # If the next 2 elements do not start with 10, return False
+            if index + 2 >= len(data) or format(data[index + 1],
+                                                '#010b')[0:2] != '10' \
+                    or format(data[index + 2], '#010b')[0:2] != '10':
                 return False
-            # Check that the next 2 elements in the list start with 10
-            if bin_list[1][:2] != '10' or bin_list[2][:2] != '10':
-                return False
-            # We pop the first 3 bytes of the binary
-            bin_list.pop(0)
-            bin_list.pop(0)
-            bin_list.pop(0)
-
-        # Check if binary is 4 bytes
+            # Move to the next 3 elements
+            index += 3
+        # If the first 4 bits are 1, check the number of 1s
         elif binary[:5] == '11110':
-            # If it is, check that binary list has at least 4 elements
-            if len(bin_list) < 4:
+            # If the next 3 elements do not start with 10, return False
+            if index + 3 >= len(data) or format(data[index + 1],
+                                                '#010b')[0:2] != '10' \
+                    or format(data[index + 2], '#010b')[0:2] != '10' \
+                    or format(data[index + 3], '#010b')[0:2] != '10':
                 return False
-            # Check that the next 3 elements in the list start with 10
-            if bin_list[1][:2] != '10' or bin_list[2][:2] != '10' \
-                    or bin_list[3][:2] != '10':
-                return False
-            # We pop the first 4 bytes of the binary
-            bin_list.pop(0)
-            bin_list.pop(0)
-            bin_list.pop(0)
-            bin_list.pop(0)
-
-        # If binary is not 1, 2, 3, or 4 bytes, it is invalid
+            # Move to the next 4 elements
+            index += 4
         else:
+            # If the first 5 bits are 1, return False
             return False
 
+    # If all checks pass, return True
     return True
