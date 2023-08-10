@@ -38,4 +38,5 @@ Then, it makes a request to the Star Wars API to get the characters of that movi
 We import the request module first, then we get the episode number using `process.argv[2]`.
 After that, we make the request to the API using the `request` module and the `episode number` as argument.
 
-The request returns a JSON object with the characters of the movie, we iterate over the characters and print them.
+The request returns a JSON object with the character urls, we iterate over the urls and await for the response of each one.
+Then, we print the name of each character.
