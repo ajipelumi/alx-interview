@@ -3,7 +3,14 @@
 import sys
 
 
-def print_stats(file_size, status_codes):
+# Initialize file size, line count and status codes
+file_size = 0
+line_count = 0
+status_codes = {"200": 0, "301": 0, "400": 0, "401": 0,
+                "403": 0, "404": 0, "405": 0, "500": 0}
+
+
+def print_stats():
     """ Print stats. """
     # Print file size
     print("File size: {}".format(file_size))
@@ -13,25 +20,28 @@ def print_stats(file_size, status_codes):
             print("{}: {}".format(key, status_codes[key]))
 
 
-# Initialize file size and status codes
-file_size = 0
-status_codes = {"200": 0, "301": 0, "400": 0, "401": 0,
-                "403": 0, "404": 0, "405": 0, "500": 0}
 # Try to read stdin line by line
 try:
-    for i, line in enumerate(sys.stdin, 1):
-        # Split line into words
-        data = line.split()
-        # Get file size which is the last word of the line
-        file_size += int(data[-1])
-        # Get status code which is the second to last word of the line
-        if data[-2] in status_codes:
-            status_codes[data[-2]] += 1
-        # Print stats every 10 lines
-        if i % 10 == 0:
-            print_stats(file_size, status_codes)
+    for line in sys.stdin:
+        # Split line by spaces
+        split = line.split()
+        # Check if split has at least 2 elements
+        if len(split) > 2:
+            # Get file size
+            file_size += int(split[-1])
+            # Get status code
+            status_code = split[-2]
+            # Check if status code is in status_codes
+            if status_code in status_codes:
+                # Increment status code
+                status_codes[status_code] += 1
+        # Increment line count
+        line_count += 1
+        # Check if line count is multiple of 10
+        if line_count % 10 == 0:
+            # Print stats
+            print_stats()
 except KeyboardInterrupt:
-    # Print stats when Ctrl+C is pressed
-    print_stats(file_size, status_codes)
-    # Raise the exception again to exit
+    # Print stats
+    print_stats()
     raise
