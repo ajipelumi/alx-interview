@@ -14,10 +14,10 @@ def print_stats():
     """ Print stats. """
     # Print file size
     print("File size: {}".format(file_size))
-    # Sort status codes and print them if they are greater than 0
-    for key in sorted(status_codes.keys()):
-        if status_codes[key] > 0:
-            print("{}: {}".format(key, status_codes[key]))
+    # Print status codes
+    for key, value in status_codes.items():
+        if value:
+            print("{}: {}".format(key, value))
 
 
 # Try to read stdin line by line
