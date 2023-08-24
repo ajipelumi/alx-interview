@@ -41,6 +41,7 @@ try:
         if line_count % 10 == 0:
             # Print stats
             print_stats()
+    print_stats()
 except KeyboardInterrupt:
     # Print stats
     print_stats()
