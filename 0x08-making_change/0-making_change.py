@@ -18,8 +18,6 @@ def makeChange(coins, total):
     max_coin = max(coins)
     # Loop until total is 0
     while total > 0:
-        print(f"This is the total: {total}")
-        print(f"This is the max coin: {max_coin}")
         # Check if total is greater than max coin
         if total >= max_coin:
             # Subtract max coin from total
