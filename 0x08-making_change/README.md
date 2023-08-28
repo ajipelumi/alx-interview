@@ -27,14 +27,18 @@ The function `makeChange` determines the fewest number of coins needed to meet a
 The function then initializes a variable `change` to the value of 0.
 A variable `max_coin` is initialized to the value of the largest coin in the list `coins`.
 
-A while loop is used to iterate through the list `coins` and check if the total is greater than or equal to the value of the maximum coin.
-If so, the total is decremented by the value of the maximum coin and the variable `change` is incremented by 1.
+A while loop is used to iterate until the total is less than or equal to 0.
+Within the loop, we check if the total is greater than or equal to the value of `max_coin`.
+If so, we decrement the total by the value of `max_coin` and increment the value of `change` by 1.
 
-After incrementing `change`, the new total is checked to see if it is less than `max_coin` as that would mean that the new total is less than the value of the largest coin.
-If so, the `max_coin` is removed from the list `coins` and the variable `max_coin` is updated to the new largest coin in the list and the while loop is repeated.
+If not, we check if the coins list is greater than 1. This is to avoid an infinite loop in cases where the total is less than the value of `max_coin`.
+If the coins list is greater than 1, we remove the largest coin from the list and reassign `max_coin` to the new largest coin.
 
-Once the while loop is finished, the function returns the value of `change`.
-If the total is not 0, it means that the total could not be made with the coins in the list `coins` and the function returns -1.
+If the coins list is not greater than 1, it means that the total is less than the value of `max_coin` and that the total cannot be made with the coins in the list as we have reached the smallest coin in the list so we return -1.
+
+After the loop, we check if the total is equal to 0. If so, we return the value of `change`.
+If not, it means that the total cannot be made with the coins in the list so we return -1.
+The if statement is an extra check to ensure that the function returns -1 in cases where the total is less than the value of `max_coin` and the coins list is not greater than 1.
 
 ### Big O Notation
 **makeChange** has a worst-case time complexity of *O(n)*, where `n` is the number of coins in the list `coins`.
