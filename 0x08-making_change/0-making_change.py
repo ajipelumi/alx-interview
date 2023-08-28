@@ -7,7 +7,7 @@ def makeChange(coins, total):
     # Check if total is 0 or negative
     if total <= 0:
         return 0
-    
+
     # Check if coins is empty
     if len(coins) == 0:
         return -1
