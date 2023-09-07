@@ -17,10 +17,6 @@ def isPrime(num):
 
 def isWinner(x, nums):
     """ Determine who the winner of each game is. """
-    # If there are no numbers in nums and no rounds, return None
-    if len(nums) == 0 or x < 1:
-        return None
-
     # Initialize scores
     maria = 0
     ben = 0
