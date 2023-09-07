@@ -4,14 +4,18 @@
 
 def isPrime(num):
     """ Checks if num is a prime number. """
-    # Iterate from 2 to num - 1
-    for n in range(2, num):
-        # If num is divisible by any number between
-        # 2 and num, it is not prime
-        if num % n == 0:
-            # Return False if not prime
+    # 0 and 1 are not prime numbers
+    if num < 2:
+        return False
+    # 2 is a prime number
+    if num == 2:
+        return True
+    # Check if num is divisible by any number from 2 to num - 1
+    for i in range(2, num):
+        # If divisible, num is not prime
+        if num % i == 0:
             return False
-    # If loop completes, num is prime so return True
+    # If not divisible, num is prime
     return True
 
 
@@ -20,39 +24,28 @@ def isWinner(x, nums):
     # Initialize scores
     maria = 0
     ben = 0
-    # Iterate through rounds
-    for _ in range(x):
-        # Get the first number in nums
-        n = nums.pop(0)
-        # If n is less than or equal to 1, ben wins the round by default
-        if n <= 1:
-            # Add 1 to ben's score
+    # Iterate through each game
+    for i in range(len(nums)):
+        # Initialize prime count
+        prime_count = 0
+        # Iterate through each number in the game
+        for j in range(1, nums[i] + 1):
+            # If prime, increment prime count
+            if isPrime(j):
+                prime_count += 1
+        # If prime count is even, increment Ben's score
+        if prime_count % 2 == 0:
             ben += 1
+        # If prime count is odd, increment Maria's score
         else:
-            # Initialize prime count
-            prime_count = 0
-            # Iterate through numbers from 2 to n + 1
-            # (n + 1 because range is exclusive)
-            for i in range(2, (n + 1)):
-                # We only care about prime numbers within n
-                # If i is prime, add 1 to prime count
-                if isPrime(i):
-                    prime_count += 1
-            # Here we have the total number of prime numbers within n
-            # If prime count is even, it means that ben wins the round
-            if prime_count % 2 == 0:
-                # Add 1 to ben's score
-                ben += 1
-            else:
-                # Here, maria wins the round so add 1 to her score
-                maria += 1
-
-    # After all rounds, if maria's score is greater than ben's, she wins
+            maria += 1
+    # If Maria's score is greater, return Maria
     if maria > ben:
         return "Maria"
-    # If ben's score is greater than maria's, he wins
+    # If Ben's score is greater, return Ben
     elif ben > maria:
         return "Ben"
-    # If both scores are equal, it's a tie so return None
+    # If scores are equal, return None
     else:
         return None
+    
