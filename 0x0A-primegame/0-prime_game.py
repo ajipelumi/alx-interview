@@ -4,14 +4,22 @@
 
 def isPrime(num):
     """ Checks if num is a prime number. """
-    # Iterate from 2 to num - 1
-    for n in range(2, num):
-        # If num is divisible by any number between
-        # 2 and num, it is not prime
-        if num % n == 0:
-            # Return False if not prime
+    # 0 and 1 are not prime numbers
+    if num < 2:
+        return False
+    # 2 is the only even prime number
+    if num == 2:
+        return True
+    # All other even numbers are not prime
+    if num % 2 == 0:
+        return False
+    # Check odd numbers from 3 to sqrt(num)
+    # (num + 1 because range is exclusive)
+    for i in range(3, int(num**0.5) + 1, 2):
+        # If num is divisible by i, it's not prime
+        if num % i == 0:
             return False
-    # If loop completes, num is prime so return True
+    # If we get here, num is prime
     return True
 
 
